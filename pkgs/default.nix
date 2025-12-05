@@ -49,4 +49,5 @@ in
 
   # community servers
   clickup-mcp-server = pkgs.callPackage ./community/clickup { };
+  google-calendar-mcp = pkgs.callPackage ./community/google-calendar { };
 }
