@@ -6,7 +6,7 @@ builtins.listToAttrs (
   map
     (
       example:
-      lib.nameValuePair ("example-${lib.removeSuffix ".nix" example}") (
+      lib.nameValuePair "example-${lib.removeSuffix ".nix" example}" (
         import (./. + "/${example}") { inherit pkgs; }
       )
     )

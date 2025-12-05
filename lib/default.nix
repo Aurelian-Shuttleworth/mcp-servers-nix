@@ -118,7 +118,7 @@ let
           wrapped-package = pkgs.writeScriptBin packageName ''
             #!${pkgs.runtimeShell}
             ${lib.optionalString exportEnvFile (
-              mkExportCommand ("${lib.getExe' pkgs.coreutils "cat"} ${lib.escapeShellArg cfg.envFile}")
+              mkExportCommand "${lib.getExe' pkgs.coreutils "cat"} ${lib.escapeShellArg cfg.envFile}"
             )}
             ${lib.optionalString exportPasswordCommand (
               if (lib.isString cfg.passwordCommand) then
@@ -133,7 +133,7 @@ let
           package = if doWrap then wrapped-package else cfg.package;
         in
         lib.mkIf cfg.enable {
-          ${name} = lib.filterAttrs (k: v: v != null) (
+          ${name} = lib.filterAttrs (_: v: v != null) (
             {
               command = lib.mkDefault "${lib.getExe package}";
               inherit (cfg)
@@ -154,20 +154,22 @@ let
         {
           _module.args = {
             pkgs = nixpkgs.extend (
-              final: prev: {
+              final: prev:
+              (import ../pkgs { pkgs = final; })
+              // {
                 formats =
                   prev.formats
                   // (import ../lib/formats.nix {
                     pkgs = final;
-                    lib = final.lib;
+                    inherit (final) lib;
                   });
               }
             );
           };
         }
         {
-          imports = (
-            builtins.map (module: ../modules + "/${module}") (builtins.attrNames (builtins.readDir ../modules))
+          imports = builtins.map (module: ../modules + "/${module}") (
+            builtins.attrNames (builtins.readDir ../modules)
           );
         }
         config

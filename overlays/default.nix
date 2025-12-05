@@ -1,1 +1,1 @@
-final: prev: import ../pkgs { pkgs = final; }
+final: _prev: import ../pkgs { pkgs = final; }
