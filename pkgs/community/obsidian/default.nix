@@ -17,6 +17,12 @@ buildNpmPackage rec {
 
   npmDepsHash = "sha256-hnzl1jV6GnAEAO2Px3Xdnx30upa3hdJYdrncNen12yU=";
 
+  postPatch = ''
+    substituteInPlace src/config/index.ts \
+      --replace-fail 'path.join(projectRoot, "logs")' '"/tmp/obsidian-mcp-server/logs"' \
+      --replace-fail '!resolvedDirPath.startsWith(rootDir + path.sep)' 'false'
+  '';
+
   meta = {
     description = "MCP server for Obsidian";
     homepage = "https://github.com/cyanheads/obsidian-mcp-server";
