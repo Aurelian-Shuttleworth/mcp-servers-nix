@@ -52,4 +52,6 @@ in
   google-calendar-mcp = pkgs.callPackage ./community/google-calendar { };
   obsidian-mcp-server = pkgs.callPackage ./community/obsidian { };
   linkedin-mcp-server = pkgs.callPackage ./community/linkedin { };
+  gmail-mcp-server = pkgs.callPackage ./community/gmail-mcp-server { };
+
 }
