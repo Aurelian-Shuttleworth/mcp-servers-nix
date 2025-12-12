@@ -2,44 +2,37 @@
   lib,
   buildNpmPackage,
   fetchFromGitHub,
+  runCommand,
 }:
+let
+  version = "1.1.11";
+  remoteSrc = fetchFromGitHub {
+    owner = "GongRzhe";
+    repo = "Gmail-MCP-Server";
+    rev = "a890d19189bbc1325b8728fab830fc278cfd8804";
+    hash = "sha256-cmnnRwQUOro7idWQySzhUfkKcnnLcpVYsi8JwwHeypg=";
+  };
+in
 buildNpmPackage {
   pname = "gmail-mcp-server";
-  version = "unstable-2024-05-22";
+  inherit version;
 
-  src = fetchFromGitHub {
-    owner = "zacco16";
-    repo = "gmail-mcp-server";
-    rev = "810812f2483f63e200c93ed49738a5186d0f092e";
-    hash = "sha256-VcKAl1BD5FRW3NYR7MPJHACZAiU5myBnt4PB5oxkQ5g=";
-  };
+  src = runCommand "gmail-mcp-server-src" { } ''
+    cp -r ${remoteSrc} $out
+    chmod -R +w $out
+    cp ${./package-lock.json} $out/package-lock.json
+  '';
 
-  npmDepsHash = "sha256-yC+gEmQj6VtN2ZBUg0nHfVKRHevBIwxvb8YbDItDqzw=";
+  npmDepsHash = "sha256-8bIfDL/NaeJy6SQA24Pw+Awkhw3ofYNDIAGfkWbmD6c=";
 
   makeCacheWritable = true;
   npmFlags = [ "--legacy-peer-deps" ];
 
-  postPatch = ''
-    cp ${./package-lock.json} package-lock.json
-    npm pkg set bin.gmail-mcp-server="./dist/index.js"
-    # Create empty .npmignore to prevent npm from ignoring dist/ based on .gitignore
-    touch .npmignore
-  '';
-
-  preFixup = ''
-    chmod +x $out/lib/node_modules/gmail-mcp-server/dist/index.js
-  '';
-
-  dontBuild = false;
-
-  # The package.json has a build script "npm run clean && tsc"
-  # buildNpmPackage runs `npm run build` by default if it exists.
-
   meta = {
-    description = "MCP server for Gmail API integration";
-    homepage = "https://github.com/zacco16/gmail-mcp-server";
-    license = lib.licenses.mit;
+    description = "Gmail MCP server with auto authentication support";
+    homepage = "https://github.com/GongRzhe/Gmail-MCP-Server";
+    license = lib.licenses.isc;
     maintainers = [ ];
-    mainProgram = "gmail-mcp-server";
+    mainProgram = "gmail-mcp";
   };
 }
