@@ -56,3 +56,26 @@ The `gmail-mcp-server` allows Claude to interact with your Gmail and Google Cale
       envFile = "/path/to/gmail.env";
     };
     ```
+
+## Antigravity / Generic MCP Client Configuration
+
+If you are manually configuring an MCP client (like Antigravity) via a JSON config file, you can run the server directly using `nix run`.
+
+Add the following to your `mcpServers` configuration:
+
+```json
+{
+  "gmail-mcp-server": {
+    "command": "nix",
+    "args": [
+      "run",
+      "github:Aurelian-Shuttleworth/mcp-servers-nix/feature/gmail-mcp-server#gmail-mcp-server"
+    ],
+    "env": {
+      "GOOGLE_CLIENT_ID": "your_client_id",
+      "GOOGLE_CLIENT_SECRET": "your_client_secret",
+      "GOOGLE_REFRESH_TOKEN": "your_refresh_token"
+    }
+  }
+}
+```
