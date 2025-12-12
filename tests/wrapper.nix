@@ -4,7 +4,7 @@
 let
   mcp-servers = import ../. { inherit pkgs; };
   printenv = pkgs.writeScriptBin "printenv" ''
-    printenv
+    ${pkgs.coreutils}/bin/printenv
   '';
 in
 {
