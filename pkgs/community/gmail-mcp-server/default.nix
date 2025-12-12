@@ -21,6 +21,13 @@ buildNpmPackage {
 
   postPatch = ''
     cp ${./package-lock.json} package-lock.json
+    npm pkg set bin.gmail-mcp-server="./dist/index.js"
+    # Create empty .npmignore to prevent npm from ignoring dist/ based on .gitignore
+    touch .npmignore
+  '';
+
+  preFixup = ''
+    chmod +x $out/lib/node_modules/gmail-mcp-server/dist/index.js
   '';
 
   dontBuild = false;
