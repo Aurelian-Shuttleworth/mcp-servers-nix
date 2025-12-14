@@ -17,6 +17,10 @@ buildNpmPackage rec {
 
   npmDepsHash = "sha256-eSKWr+dWrMf19Xb+5eKI4ZkBLTH09qysj+4rxpjWrSE=";
 
+  postInstall = ''
+    ln -s $out/bin/@zereight/mcp-gitlab $out/bin/gitlab-mcp
+  '';
+
   meta = {
     description = "MCP server for using the GitLab API";
     homepage = "https://github.com/zereight/gitlab-mcp";
