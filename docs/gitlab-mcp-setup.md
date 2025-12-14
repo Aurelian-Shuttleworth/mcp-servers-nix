@@ -36,3 +36,21 @@ programs.gitlab-mcp = {
   };
 };
 ```
+
+## Antigravity / Generic MCP Client Configuration
+
+```json
+{
+  "gitlab": {
+    "command": "nix",
+    "args": [
+      "run",
+      "github:Aurelian-Shuttleworth/mcp-servers-nix/feature/gitlab-mcp-server#gitlab-mcp"
+    ],
+    "env": {
+      "GITLAB_PERSONAL_ACCESS_TOKEN": "glpat-xxxxxxxxxxxxxxxxxxxx",
+      "GITLAB_API_URL": "https://gitlab.com/api/v4"
+    }
+  }
+}
+```

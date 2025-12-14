@@ -53,5 +53,6 @@ in
   obsidian-mcp-server = pkgs.callPackage ./community/obsidian { };
   linkedin-mcp-server = pkgs.callPackage ./community/linkedin { };
   gmail-mcp-server = pkgs.callPackage ./community/gmail-mcp-server { };
+  gitlab-mcp = pkgs.callPackage ./community/gitlab-mcp { };
 
 }

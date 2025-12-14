@@ -38,10 +38,10 @@ in
   config.settings.servers = lib.mkIf cfg.enable {
     gitlab-mcp = {
       env = {
-        GITLAB_API_URL = cfg.settings.GITLAB_API_URL;
+        inherit (cfg.settings) GITLAB_API_URL;
       }
       // lib.optionalAttrs (cfg.settings.GITLAB_PROJECT_ID != null) {
-        GITLAB_PROJECT_ID = cfg.settings.GITLAB_PROJECT_ID;
+        inherit (cfg.settings) GITLAB_PROJECT_ID;
       }
       // lib.optionalAttrs (cfg.settings.GITLAB_ALLOWED_PROJECT_IDS != [ ]) {
         GITLAB_ALLOWED_PROJECT_IDS = lib.concatStringsSep "," cfg.settings.GITLAB_ALLOWED_PROJECT_IDS;
