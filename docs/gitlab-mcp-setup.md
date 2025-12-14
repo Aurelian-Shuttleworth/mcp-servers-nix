@@ -45,7 +45,7 @@ programs.gitlab-mcp = {
     "command": "nix",
     "args": [
       "run",
-      "github:Aurelian-Shuttleworth/mcp-servers-nix/feature/gitlab-mcp-server#gitlab-mcp"
+      "github:Aurelian-Shuttleworth/mcp-servers-nix/feature/gitlab-mcp#gitlab-mcp"
     ],
     "env": {
       "GITLAB_PERSONAL_ACCESS_TOKEN": "glpat-xxxxxxxxxxxxxxxxxxxx",
